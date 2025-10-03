@@ -1,0 +1,83 @@
+.currentnews-body {
+  --gap: 32px; /* space between loops */
+  --speed: 25s; /* default duration */
+  --size: clamp(13px, 1.6vw, 16px); /* responsive font */
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 0 rgba(16, 24, 40, 0.02);
+}
+
+/* Track uses flex to duplicate content for seamless loop */
+.currentnews-track {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  width: max-content;
+  animation: marquee var(--speed) linear infinite;
+  will-change: transform;
+}
+
+/* Item text */
+.currentnews-text {
+  color: var(--text);
+  font-size: var(--size);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Pause on hover/focus for accessibility */
+.currentnews-body:hover .currentnews-track,
+.currentnews-body:focus-within .currentnews-track {
+  animation-play-state: paused;
+}
+
+/* Prefer reduced motion users: no animation, allow scroll */
+@media (prefers-reduced-motion: reduce) {
+  .currentnews-track {
+    animation: none;
+  }
+  .currentnews-body {
+    overflow: auto;
+  }
+}
+
+/* Speed scaling by viewport width */
+@media (max-width: 768px) {
+  .currentnews-body {
+    --speed: 35s;
+    --gap: 24px;
+  }
+}
+@media (max-width: 480px) {
+  .currentnews-body {
+    --speed: 42s;
+    --gap: 20px;
+  }
+}
+
+/* RTL support */
+[dir="rtl"] .currentnews-track {
+  animation-name: marquee-rtl;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  } /* moving by half because of duplication */
+}
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

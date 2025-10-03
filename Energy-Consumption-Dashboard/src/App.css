@@ -1,0 +1,30 @@
+.app {
+  background: #fafbff;
+  min-height: 100vh;
+  padding: clamp(14px, 2vw, 20px) clamp(16px, 2.4vw, 24px) clamp(48px, 4vw, 60px);
+}
+
+/* Base grid */
+.grid {
+  display: grid;
+  gap: clamp(10px, 1.6vw, 16px);
+  margin-top: clamp(10px, 1.2vw, 12px);
+}
+
+/* Utilities for common layouts */
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* Breakpoints: collapse progressively */
+@media (max-width: 1200px) {
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* Optional: wide desktops give a little more breathing room */
+@media (min-width: 1600px) {
+  .grid { gap: clamp(16px, 1.4vw, 24px); }
+}
